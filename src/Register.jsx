@@ -1,12 +1,21 @@
+//imports
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom";
+import Login from "./Login";
 
+// Register component
 const Register = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [csrfToken, setCsrfToken] = useState("");
+    const [jwtToken, setJwtToken] = useState("")
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+    const [users, setUsers] = useState([])
+    const navigate = useNavigate();
+
+    // CSRF token
     useEffect(() => {
         fetch('https://chatify-api.up.railway.app/csrf', {
             method: 'PATCH',
@@ -21,8 +30,24 @@ const Register = () => {
             })
 
     }, []);
+    //Fetch all user when JWT is set
+    useEffect(() => {
+        if (jwtToken) {
+            fetchAllUsers(jwtToken)
+        }
+    }, [jwtToken]);
+
+    // Submit button
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        //check if your name exists
+        const existingUser = users.find(user => user.username === username)
+        if (existingUser) {
+            setError("Username already exists");
+            setSuccess("")
+            return;
+        }
         fetch("https://chatify-api.up.railway.app/auth/register", {
             method: "POST",
             headers: {
@@ -47,13 +72,36 @@ const Register = () => {
                 else {
                     setSuccess("Registration successful")
                     console.log("Registration successful", data)
+                    navigate("/Login")
                 }
-
+                if (data.token) {
+                    setJwtToken(data.token)
+                    fetchAllUsers(data.token)
+                }
             })
+
             .catch((error) => {
                 console.error("Error during registration:", error)
             })
 
+    }
+    //Fetching the users
+    const fetchAllUsers = (token) => {
+        fetch("https://chatify-api.up.railway.app/users", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setUsers(data);
+                console.log("Fetched users:", data);
+            })
+            .catch((error) => {
+                console.error("Error fetching users:", error)
+            })
     }
     return (
         <>
