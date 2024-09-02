@@ -57,7 +57,7 @@ const Register = () => {
                 email: email,
                 username: username,
                 password: password,
-                avatar: null, // TODO: ändra till URL för bild, typ: https://i.pravatar.cc/100?img=12 
+                avatar: "https://i.pravatar.cc/100?img=12",
                 csrfToken: csrfToken
             }),
 

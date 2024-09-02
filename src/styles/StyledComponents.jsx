@@ -84,5 +84,7 @@ const SignUp = styled.button`
   }
 `
 
+//chat styles
+
 
 export { Card, Header, Label, FormGroup, Input, Button, Hr, SignUp } 

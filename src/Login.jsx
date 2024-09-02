@@ -9,7 +9,8 @@ const Login = () => {
     const [jwtToken, setJwtToken] = useState("")
     const [csrfToken, setCsrfToken] = useState("")
     const [error, setError] = useState("");
-    const [users, setUsers] = useState([]);
+    const [userId, setUserId] = useState();
+    const [avatar, setAvatar] = useState();
     const Navigate = useNavigate();
 
     const HandleUsernameChange = (event) => {
@@ -43,12 +44,17 @@ const Login = () => {
 
             const tokenData = await tokenResponse.json();
             const token = tokenData.token;
+            const userId = tokenData.userId;
 
             if (token) {
                 setJwtToken(token);
+                setUserId(userId)
+                sessionStorage.setItem("token", token)
+                sessionStorage.setItem("UserID", userId)
+                sessionStorage.setItem("Username", username)
 
 
-                Navigate("/Dashboard");
+                Navigate("/Chat");
             } else {
                 setError("Failed to retrieve token");
             }
