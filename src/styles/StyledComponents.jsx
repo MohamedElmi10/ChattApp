@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Card = styled.div`
 
     width: 330px;
-    height: 490px;
+    min-height: 490px;
     background-color: #000000;
     cursor: pointer;
     border-radius: 10px;
@@ -34,6 +34,7 @@ const Label = styled.label`
     color: #ffff;
     margin-bottom: 8px;
     width: 50%;
+    margin-top: 8px;
     
  
 `

@@ -43,16 +43,23 @@ const Login = () => {
             }
 
             const tokenData = await tokenResponse.json();
+            console.log("Token Data:", tokenData);
+
             const token = tokenData.token;
-            const userId = tokenData.userId;
+            setJwtToken(token);
+            const decodedJwt = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
 
-            if (token) {
-                setJwtToken(token);
-                setUserId(userId)
+            if (decodedJwt) {
+                setUserId(decodedJwt.id)
+                setAvatar(decodedJwt.avatar);
                 sessionStorage.setItem("token", token)
-                sessionStorage.setItem("UserID", userId)
-                sessionStorage.setItem("Username", username)
-
+                sessionStorage.setItem("UserID", decodedJwt.id)
+                sessionStorage.setItem("Username", decodedJwt.user)
+                sessionStorage.setItem("Avatar", decodedJwt.avatar);
+                // console.log(username)
+                // console.log(token)
+                // console.log(userId)
+                // console.log(avatar)
 
                 Navigate("/Chat");
             } else {
