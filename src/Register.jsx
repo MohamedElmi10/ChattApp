@@ -9,6 +9,7 @@ const Register = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [csrfToken, setCsrfToken] = useState("");
+    const [avatar, setAvatar] = useState("");
     const [jwtToken, setJwtToken] = useState("")
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -57,8 +58,8 @@ const Register = () => {
                 email: email,
                 username: username,
                 password: password,
-                avatar: null, // TODO: ändra till URL för bild, typ: https://i.pravatar.cc/100?img=12 
-                csrfToken: csrfToken
+                csrfToken: csrfToken,
+                avatar: avatar
             }),
 
         })
@@ -103,6 +104,7 @@ const Register = () => {
                 console.error("Error fetching users:", error)
             })
     }
+    const avatars = Array.from({ length: 10 }, (_, index) => `https://i.pravatar.cc/150?img=${index + 1}`);
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -134,6 +136,20 @@ const Register = () => {
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter your Password..."
                         />
+                    </FormGroup>
+                    <FormGroup>
+                        <div>
+                            <p>Select an Avatar:</p>
+                            {avatars.map((url, index) => (
+                                <img
+                                    key={index}
+                                    src={url}
+                                    alt={`Avatar ${index + 1}`}
+                                    style={{ cursor: "pointer", margin: "5px", border: avatar === url ? "2px solid #1369ce" : "none" }}
+                                    onClick={() => setAvatar(url)}
+                                />
+                            ))}
+                        </div>
                     </FormGroup>
                     <Button type="submit" >Register</Button>
                 </Card>
