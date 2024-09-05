@@ -152,7 +152,7 @@ const Chat = () => {
     const combinedMessages = [...fakeChat, ...messages];
     const InputWithIcon = ({ messageInput, setMessageInput, handleSubmit }) => {
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
                 <div style={{ position: 'relative', display: 'inline-block' }}>
 
                     <input
@@ -160,6 +160,8 @@ const Chat = () => {
                         value={messageInput}
                         onChange={(e) => setMessageInput(e.target.value)}
                         placeholder="Message..."
+                        id="messageInput"
+                        name="messageInput"
                         style={{
                             flexGrow: 1,
                             padding: '10px',
@@ -203,7 +205,7 @@ const Chat = () => {
                 .then(response => response.json())
                 .then(data => {
                     console.log("Message sent:", data);
-                    setMessageInput(""); // Clear the input field after sending
+                    ; // Clear the input field after sending
                 })
                 .catch(error => {
                     console.error("Error sending message:", error);

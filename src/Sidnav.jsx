@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./styles/Sidenav.css";
+import { useNavigate } from "react-router-dom";
 
 const Sidenav = () => {
     const [sideNavWidth, setSideNavWidth] = useState(0); // To control the width of the sidenav
+    const Navigate = useNavigate();
 
     const openNav = () => {
         setSideNavWidth(250); // Set the width to 250px when opening
@@ -11,6 +13,10 @@ const Sidenav = () => {
     const closeNav = () => {
         setSideNavWidth(0); // Set the width to 0px when closing
     };
+    const LogOut = () => {
+        sessionStorage.removeItem("token")
+        Navigate("/login")
+    }
 
     return (
         <div>
@@ -20,10 +26,10 @@ const Sidenav = () => {
                 className="sidenav"
                 style={{ width: sideNavWidth }} // Dynamically update the width based on state
             >
-                <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
+                <a href="" className="closebtn" onClick={closeNav}>
                     &times;
                 </a>
-                <a href="#" style={{ backgroundColor: "Red" }}>Logout</a>
+                <button onClick={LogOut} href="#" style={{ backgroundColor: "Red" }}>Logout</button>
 
             </div>
 
