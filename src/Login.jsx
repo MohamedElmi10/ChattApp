@@ -91,30 +91,34 @@ const Login = () => {
     return (
         <>
             <Header>Login</Header>
-            <Card>
-                <FormGroup>
-                    <Label htmlFor="UserName">Username</Label>
-                    <Input
-                        type="text"
-                        id="UserName"
-                        value={username}
-                        onChange={HandleUsernameChange}
-                        placeholder="Enter your username..." />
-                </FormGroup>
-                <FormGroup>
-                    <Label htmlFor="PassWord">Password</Label>
-                    <Input
-                        type="password"
-                        id="PassWord"
-                        value={password}
-                        onChange={HandlePasswordChange}
-                        placeholder="Enter your password..." />
-                </FormGroup>
-                <Button type="submit" onClick={HandleSubmit}>Login</Button>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                <Hr />
-                <SignUp onClick={HandleSignUpClick}>Sign up</SignUp>
-            </Card>
+            <form action="">
+                <Card>
+                    <FormGroup>
+                        <Label htmlFor="UserName">Username</Label>
+                        <Input
+                            type="text"
+                            id="UserName"
+                            value={username}
+                            onChange={HandleUsernameChange}
+                            placeholder="Enter your username..."
+                            autoComplete="username" />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label htmlFor="PassWord">Password</Label>
+                        <Input
+                            type="password"
+                            id="PassWord"
+                            value={password}
+                            onChange={HandlePasswordChange}
+                            placeholder="Enter your password..."
+                            autoComplete="current-password" />
+                    </FormGroup>
+                    <Button type="submit" onClick={HandleSubmit}>Login</Button>
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+                    <Hr />
+                    <SignUp onClick={HandleSignUpClick}>Sign up</SignUp>
+                </Card>
+            </form>
         </>
 
     )
