@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Profile, Name, Avatar, Picture } from "./styles/StyledComponents";
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import Sidenav from "./Sidnav";
+import MessageInput from "./MessageInput";
 const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -24,7 +25,7 @@ const RealMessageBubble = styled.div`
   background-color: #33C85A; 
   color: #000000;
   padding: 10px;
-  max-width: 60%;
+  min-width: 60px;
   word-wrap: break-word;
   display: flex;
   align-items: center;
@@ -32,6 +33,8 @@ const RealMessageBubble = styled.div`
   margin: 0 10px 0 0;
   padding: 10px;
   position: relative;
+  border-radius: 5px;
+
   
 `;
 const FakeMessageContainer = styled.div`
@@ -46,12 +49,11 @@ const FakeMessageBubble = styled.div`
   background-color: #E9E9EB;
   color: #000000;
   padding: 10px;
-  max-width: 60%;
-  word-wrap: break-word;
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin: 0 0 0 10px;
+ 
+  border-radius: 5px;
 `;
 const UserName = styled.p`
 width: 100%;
@@ -150,44 +152,6 @@ const Chat = () => {
     };
 
     const combinedMessages = [...fakeChat, ...messages];
-    const InputWithIcon = ({ messageInput, setMessageInput, handleSubmit }) => {
-        return (
-            <form onSubmit={handleSubmit} >
-                <div style={{ position: 'relative', display: 'inline-block' }}>
-
-                    <input
-                        type="text"
-                        value={messageInput}
-                        onChange={(e) => setMessageInput(e.target.value)}
-                        placeholder="Message..."
-                        id="messageInput"
-                        name="messageInput"
-                        style={{
-                            flexGrow: 1,
-                            padding: '10px',
-                            minHeight: '40px',
-                            boxSizing: 'border-box',
-                            borderRadius: '5px',
-                            border: '1px solid #ccc'
-                        }}
-                    />
-                    <button
-                        type="submit"
-                        style={{
-                            marginLeft: '10px',
-                            padding: '10px 20px',
-                            backgroundColor: '#33C85A',
-                            color: '#fff',
-                            border: 'none',
-                            borderRadius: '5px',
-                            cursor: 'pointer'
-                        }}
-                    >
-                        Send </button>
-                </div>
-            </form>
-        );
-    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -205,7 +169,7 @@ const Chat = () => {
                 .then(response => response.json())
                 .then(data => {
                     console.log("Message sent:", data);
-                    ; // Clear the input field after sending
+                    setMessageInput("")
                 })
                 .catch(error => {
                     console.error("Error sending message:", error);
@@ -262,6 +226,7 @@ const Chat = () => {
                                     onClick={() => deleteMessage(message.id)}
                                     style={{
                                         marginTop: "10px",
+                                        marginRight: "-15px",
                                         padding: "5px 10px",
                                         backgroundColor: "#FF5733",
                                         color: "#fff",
@@ -276,7 +241,7 @@ const Chat = () => {
                         );
                     }
                 })}
-                <InputWithIcon
+                <MessageInput
                     messageInput={messageInput}
                     setMessageInput={setMessageInput}
                     handleSubmit={handleSubmit}
