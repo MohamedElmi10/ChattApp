@@ -87,13 +87,14 @@ const SignUp = styled.button`
 
 //chat styles
 const Profile = styled.div`
-width:150px ;
-
+width:50% ;
+margin-bottom: 30px;
 padding: 10px;
 background-color: #f7f5ec;
 text-align: center;
 overflow: hidden;
-position: absolute;
+
+left: 0;
 top: 5px;
 left: 20px;
 border-radius: 20px; 
